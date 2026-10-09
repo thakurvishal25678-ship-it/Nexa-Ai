@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nexa AI</title>
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+/* RIGHT PANEL FORCE TEST */
+
+.chat-container {
+    width: 100vw !important;
+    height: 100vh !important;
+    display: flex !important;
+    overflow: hidden !important;
+}
+
+.chat-container > .sidebar {
+    width: 300px !important;
+    min-width: 300px !important;
+}
+
+.chat-container > .chat-area {
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+.chat-container > .right-panel {
+    display: block !important;
+    width: 320px !important;
+    min-width: 320px !important;
+    height: 100vh !important;
+    padding: 22px !important;
+
+    background: #071321 !important;
+    border-left: 1px solid #1d3555 !important;
+
+    overflow-y: auto !important;
+    flex-shrink: 0 !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="chat-container">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <div class="sidebar">
+
+        <h2>Nexa AI</h2>
+
+        <button id="newChat">+ New Chat</button>
+        <!-- MAIN MENU -->
+
+<ul class="main-menu">
+
+    <li class="active">
+        🏠 <span>Home</span>
+    </li>
+
+    <li>
+        💬 <span>Chat</span>
+    </li>
+
+    <li>
+        📚 <span>Study Help</span>
+    </li>
+
+    <li>
+        💻 <span>Coding</span>
+    </li>
+
+    <li>
+        🌐 <span>Translate</span>
+    </li>
+
+    <li>
+        📄 <span>PDF Summary</span>
+    </li>
+
+    <li>
+        🖼️ <span>Image AI</span>
+    </li>
+
+</ul>
+
+        <h3>Recent Chats</h3>
+
+        <ul id="chatList">
+
+            <li data-chat="welcome">
+                💬 Welcome Chat
+            </li>
+
+            <li data-chat="study">
+                📚 Study Help
+            </li>
+
+            <li data-chat="coding">
+                💻 Coding
+            </li>
+
+            <li data-chat="translate">
+                🌐 Translate
+            </li>
+
+            <li data-chat="pdf">
+                📄 PDF Summary
+            </li>
+
+            <li data-chat="image">
+                🖼️ Image AI
+            </li>
+
+        </ul>
+
+        <hr>
+
+
+        <div class="sidebar-bottom">
+
+            <button id="settingsBtn">
+                ⚙️ Settings
+            </button>
+
+            <button id="profileBtn">
+                👤 Profile
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SETTINGS ================= -->
+
+    <div id="settingsPanel" class="settings-panel">
+
+        <div class="settings-box">
+
+            <div class="settings-header">
+
+                <h2>⚙️ Settings</h2>
+
+                <button id="closeSettings">
+                    ✕
+                </button>
+
+            </div>
+
+
+            <div class="setting-item">
+
+                <div>
+                    <h3>🌙 Dark Mode</h3>
+                    <p>Use dark theme for Nexa AI</p>
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="darkModeToggle"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="setting-item">
+
+                <div>
+                    <h3>🔊 Sound</h3>
+                    <p>Enable AI voice responses</p>
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="soundToggle"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="setting-item">
+
+                <div>
+                    <h3>📝 Enter to Send</h3>
+                    <p>Press Enter to send messages</p>
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="enterToggle"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <button
+                id="clearHistoryBtn"
+                class="danger-btn"
+            >
+                🗑️ Clear Chat History
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= MAIN CHAT ================= -->
+
+    <div class="chat-area">
+
+
+        <!-- CHAT HEADER -->
+
+        <div class="chat-header">
+
+            <div class="header-left">
+
+                <h1>🤖 Nexa AI</h1>
+
+                <p>
+                    Powered by Gemini AI
+                </p>
+
+            </div>
+
+
+            <div class="header-right">
+
+                <button id="uploadBtn">
+                    📎 Upload
+                </button>
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    accept=".pdf,.txt,.doc,.docx,image/*"
+                    hidden
+                >
+
+                <button id="voiceBtn">
+                    🎤 Voice
+                </button>
+
+                <button id="themeBtn">
+                    🌙 Dark
+                </button>
+
+            </div>
+
+        </div>
+        
+
+
+        <!-- MESSAGES -->
+
+        <div
+            id="messages"
+            class="messages">
+
+    <div class="center-welcome">
+
+        <div class="nexa-logo-big">
+            N
+        </div>
+
+        <h1>
+            Nexa <span>AI</span>
+        </h1>
+
+        <h2>
+            Welcome to <span>Nexa AI</span>
+        </h2>
+
+        <p>
+            Your Everyday AI Assistant
+        </p>
+
+    </div>
+
+    <!-- Existing AI message yahin rahega -->
+
+            <div class="ai-message">
+
+                <p>
+                    👋 Hello! I am Nexa AI.
+                    How can I help you today?
+                </p>
+
+
+                <div class="message-actions">
+
+                    <button class="copyBtn">
+                        📋 Copy
+                    </button>
+
+                    <button class="likeBtn">
+                        👍
+                    </button>
+
+                    <button class="dislikeBtn">
+                        👎
+                    </button>
+
+                    <button class="speakBtn">
+                        🔊 Speak
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TYPING -->
+
+        <div
+            id="typing"
+            class="typing"
+        >
+            🤖 Nexa AI is typing...
+        </div>
+
+
+        <!-- INPUT -->
+
+        <div class="input-area">
+
+            <button id="imageBtn">
+                🖼️
+            </button>
+
+            <input
+                type="text"
+                id="userInput"
+                placeholder="Message Nexa AI..."
+            >
+
+            <button id="micBtn">
+                🎤
+            </button>
+
+            <button id="sendBtn">
+                ➤
+            </button>
+
+        </div>
+
+
+        <input
+            type="file"
+            id="imageInput"
+            accept="image/*"
+            hidden
+        >
+
+    </div>
+
+
+    <!-- ================= RIGHT PANEL ================= -->
+
+    <div class="right-panel">
+
+
+        <!-- NEXA INFO -->
+
+        <div class="nexa-info-card">
+
+            <div class="nexa-info-icon">
+                🤖
+            </div>
+
+            <div>
+
+                <h2>
+                    Nexa <span>AI</span>
+                </h2>
+
+                <p>
+                    Smarter. Faster. Together.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="right-section">
+
+            <h3>
+                ⚡ Quick Actions
+            </h3>
+
+
+            <div
+                class="quick-action"
+                id="quickNewChat"
+            >
+
+                <div class="quick-icon">
+                    ＋
+                </div>
+
+                <div class="quick-text">
+
+                    <strong>
+                        New Chat
+                    </strong>
+
+                    <small>
+                        Start a fresh conversation
+                    </small>
+
+                </div>
+
+                <span>›</span>
+
+            </div>
+
+
+            <div
+                class="quick-action"
+                id="quickPdf"
+            >
+
+                <div class="quick-icon">
+                    📄
+                </div>
+
+                <div class="quick-text">
+
+                    <strong>
+                        Upload PDF
+                    </strong>
+
+                    <small>
+                        Ask questions from PDF
+                    </small>
+
+                </div>
+
+                <span>›</span>
+
+            </div>
+
+
+            <div
+                class="quick-action"
+                id="quickImage"
+            >
+
+                <div class="quick-icon">
+                    🖼️
+                </div>
+
+                <div class="quick-text">
+
+                    <strong>
+                        Upload Image
+                    </strong>
+
+                    <small>
+                        Analyze or create images
+                    </small>
+
+                </div>
+
+                <span>›</span>
+
+            </div>
+
+        </div>
+
+
+        <!-- POPULAR PROMPTS -->
+
+        <div class="right-section popular-section">
+
+            <h3>
+                ✨ Popular Prompts
+            </h3>
+
+
+            <div class="prompt-item">
+
+                <span>
+                    Explain this topic simply
+                </span>
+
+                <b>›</b>
+
+            </div>
+
+
+            <div class="prompt-item">
+
+                <span>
+                    Write a Python program
+                </span>
+
+                <b>›</b>
+
+            </div>
+
+
+            <div class="prompt-item">
+
+                <span>
+                    Summarize this PDF
+                </span>
+
+                <b>›</b>
+
+            </div>
+
+
+            <div class="prompt-item">
+
+                <span>
+                    Help me study for exams
+                </span>
+
+                <b>›</b>
+
+            </div>
+
+
+            <div class="prompt-item">
+
+                <span>
+                    Translate this text
+                </span>
+
+                <b>›</b>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOTTOM CARD -->
+
+        <div class="right-bottom-card">
+
+            <div class="rocket">
+                🚀
+            </div>
+
+            <h2>
+                Nexa AI
+            </h2>
+
+            <p>
+                Learn • Create • Explore
+            </p>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
